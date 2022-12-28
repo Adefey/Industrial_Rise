@@ -46,7 +46,7 @@ private:
 
   std::string output_dir;
 
-  std::vector<std::map<std::string, std::string>> post_mapper;
+  std::vector<std::vector<std::pair<std::string, std::string>>> post_mapper;
 
   std::vector<std::vector<std::pair<std::string, std::vector<std::string>>>>
       pred_reducer;
