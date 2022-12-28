@@ -17,7 +17,7 @@ namespace IndustrialRise {
 
 struct IMapper {
   virtual std::vector<std::pair<std::string, std::string>>
-  operator()(std::pair<std::string, std::string>) {
+  operator()(const std::string & str) {
     return {};
   }
 };
