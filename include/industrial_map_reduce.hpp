@@ -51,6 +51,8 @@ private:
   std::vector<std::vector<std::pair<std::string, std::vector<std::string>>>>
       pred_reducer;
 
+  std::mutex m;
+
   IMapper mapper;
   IReducer reducer;
 
