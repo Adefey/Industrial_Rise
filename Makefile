@@ -13,7 +13,7 @@ format:
 
 check:
 	cppcheck --enable=all --suppress=missingIncludeSystem --suppress=unusedFunction $(CODE_FILES)
-	cpplint --extensions=cpp,hpp --filter=-whitespace/indent,-whitespace/comments,-build/c++11,-readability/multiline_comment,-build/header_guard $(CODE_FILES)
+	cpplint --extensions=cpp,hpp --filter=-whitespace/indent,-whitespace/comments,-build/c++11,-readability/multiline_comment,-build/header_guard,-runtime/references $(CODE_FILES)
 
 build_app:
 	cd build && \

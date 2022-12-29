@@ -3,4 +3,5 @@ build/*
 test/*
 !test/build/CMakeLists.txt
 !test/main.cpp
+tmp_dir/*
 .vscode

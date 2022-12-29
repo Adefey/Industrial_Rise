@@ -3,12 +3,14 @@
 #ifndef INDUSTRIAL_MAP_REDUCE_HPP_
 #define INDUSTRIAL_MAP_REDUCE_HPP_
 
+#include <algorithm>
 #include <condition_variable>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <mutex>
+#include <set>
 #include <sstream>
 #include <string>
 #include <thread>
