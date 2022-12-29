@@ -6,7 +6,7 @@ SRC_DIR=./sources/
 TEST_DIR=./test/
 CODE_FILES=$(INCLUDE_DIR)*.hpp $(SRC_DIR)*.cpp $(TEST_DIR)*.cpp
 
-all: format check build_app build_test
+all: format check build_app build_test run_test make_report
 
 format:
 	clang-format -i $(CODE_FILES)
@@ -24,4 +24,11 @@ build_test:
 	cd test/build && \
 	cmake CMakeLists.txt && \
 	cmake --build .
+
+run_test:
+	valgrind --leak-check=full ./test/build/industrial_test
+
+make_report:
+	lcov -t ./test/build/ -o ./test/coverage_report.info -c -d ./test
+	genhtml -o ./test/coverage_report ./test/coverage_report.info
 

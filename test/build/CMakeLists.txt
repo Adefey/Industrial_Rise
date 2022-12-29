@@ -18,5 +18,4 @@ set_property(SOURCE ${Sources} APPEND PROPERTY COMPILE_OPTIONS "-coverage")
 
 target_include_directories(industrial_test PUBLIC ../../include  ${GTEST_INCLUDE_DIRS})
 
-
 target_link_libraries(industrial_test PUBLIC ${GTEST_LIBRARIES} pthread gcov gtest)
