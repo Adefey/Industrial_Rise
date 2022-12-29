@@ -27,10 +27,7 @@ struct IMapper {
 
 struct IReducer {
   virtual std::vector<std::pair<std::string, std::string>>
-  operator()(std::vector<std::pair<std::string, std::vector<std::string>>>) {
-    std::cout << "Basic reducer example" << std::endl;
-    return {};
-  }
+  operator()(std::vector<std::pair<std::string, std::vector<std::string>>>) = 0;
 };
 
 class IndustrialMapReduce {

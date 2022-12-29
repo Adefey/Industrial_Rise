@@ -7,12 +7,11 @@
 int main(int argc, char **argv) {
   IndustrialRise::IndustrialMapReduce map_reducer(100000);
   map_reducer.SetInputFiles(
-      {"/home/nokrolikno/CPlusPlus/Industrial_Rise/tmp_dir/text.txt"});
+      {"/home/adefe/prog/C++/Industrial_Rise/tmp_dir/text.txt"});
   map_reducer.SetMaxSimultaneouslyWorkers(10);
   map_reducer.SetNumReducers(10);
-  map_reducer.SetTmpDir("/home/nokrolikno/CPlusPlus/Industrial_Rise/tmp_dir/");
-  map_reducer.SetOutputDir(
-      "/home/nokrolikno/CPlusPlus/Industrial_Rise/result_dir/");
+  map_reducer.SetTmpDir("/home/adefe/prog/C++/Industrial_Rise/tmp_dir/");
+  map_reducer.SetOutputDir("/home/adefe/prog/C++/Industrial_Rise/result_dir/");
   UserMapper mapper;
   map_reducer.SetMapper(mapper);
   UserReducer reducer;

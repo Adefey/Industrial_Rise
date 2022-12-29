@@ -3,7 +3,7 @@ SHELL=/bin/bash #-e pipefail
 BUILD_DIR=./build/
 INCLUDE_DIR=./include/
 SRC_DIR=./sources/
-TEST_DIR=./test/
+TEST_DIR=./test/unit/
 CODE_FILES=$(INCLUDE_DIR)*.hpp $(SRC_DIR)*.cpp $(TEST_DIR)*.cpp
 
 all: format check build_app build_test run_test make_report
@@ -21,14 +21,14 @@ build_app:
 	cmake --build .
 
 build_test:
-	cd test/build && \
+	cd test/unit/build/ && \
 	cmake CMakeLists.txt && \
 	cmake --build .
 
 run_test:
-	valgrind --leak-check=full ./test/build/industrial_test
+	valgrind --leak-check=full ./test/unit/build/industrial_test
 
 make_report:
-	lcov -t ./test/build/ -o ./test/coverage_report.info -c -d ./test
-	genhtml -o ./test/coverage_report ./test/coverage_report.info
+	lcov -t ./test/unit/build/ -o ./test/unit/coverage_report.info -c -d ./test/unit
+	genhtml -o ./test/unit/coverage_report ./test/unit/coverage_report.info
 
