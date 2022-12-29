@@ -13,6 +13,23 @@ IndustrialMapReduce::IndustrialMapReduce(size_t split_size_bytes)
       reduced_prefix("reduced_"), split_size(split_size_bytes) {
 } /* Constructor with parameter wich specifies split size in bytes*/
 
+void IndustrialMapReduce::SetInputFiles(const std::vector<std::string> &files) {
+  input_files = files;
+}
+
+void IndustrialMapReduce::SetMaxSimultaneouslyWorkers(
+    size_t max_simultaneous_workers) {
+  num_mappers = max_simultaneous_workers;
+}
+void IndustrialMapReduce::SetNumReducers(size_t max_simultaneous_reducers) {
+  num_reducers = max_simultaneous_reducers;
+}
+
+void IndustrialMapReduce::SetTmpDir(const std::string &dir) { tmp_dir = dir; }
+void IndustrialMapReduce::SetOutputDir(const std::string &dir) {
+  output_dir = dir;
+}
+
 void IndustrialMapReduce::Start() {
   FilesToBuf();
   SplitFiles();
@@ -23,14 +40,15 @@ void IndustrialMapReduce::Start() {
   for (size_t i = 0; i < split_count; ++i) {
     threads[i].join();
   }
-  Shuffle();
   threads.clear();
-  for (size_t i = 0; i < num_reducers; ++i) {
+  Shuffle();
+  /*for (size_t i = 0; i < num_reducers; ++i) {
     threads.emplace_back(std::thread(&IndustrialMapReduce::Reduce, this, i));
   }
   for (size_t i = 0; i < num_reducers; ++i) {
     threads[i].join();
   }
   ClearFiles();
+  */
 }
 } // namespace IndustrialRise

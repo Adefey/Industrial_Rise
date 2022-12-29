@@ -2,6 +2,21 @@
 
 #include <industrial_map_reduce.hpp>
 
+#include <algorithm>
+#include <condition_variable>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <mutex>
+#include <set>
+#include <sstream>
+#include <string>
+#include <thread>
+#include <unordered_set>
+#include <utility>
+#include <vector>
+
 struct UserReducer : public IndustrialRise::IReducer {
   std::vector<std::pair<std::string, std::string>> operator()(
       std::vector<std::pair<std::string, std::vector<std::string>>> input) {

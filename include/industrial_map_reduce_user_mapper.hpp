@@ -2,6 +2,21 @@
 
 #include <industrial_map_reduce.hpp>
 
+#include <algorithm>
+#include <condition_variable>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <mutex>
+#include <set>
+#include <sstream>
+#include <string>
+#include <thread>
+#include <unordered_set>
+#include <utility>
+#include <vector>
+
 struct UserMapper : public IndustrialRise::IMapper {
   std::string bad_pattern = "^0-9.!?/@#()*+-";
   std::string removeSubstrs(std::string s, std::string &p) {

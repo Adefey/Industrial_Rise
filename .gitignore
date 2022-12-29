@@ -4,4 +4,7 @@ test/*
 !test/build/CMakeLists.txt
 !test/main.cpp
 tmp_dir/*
+!tmp_dir/.gitempty
+result_dir/*
+result_dir/.gitempty
 .vscode
