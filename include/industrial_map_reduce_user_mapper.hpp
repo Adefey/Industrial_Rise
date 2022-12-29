@@ -18,23 +18,18 @@
 #include <vector>
 
 struct UserMapper : public IndustrialRise::IMapper {
-  std::string bad_pattern = "0-9.!?/@#()*+-";
+  std::string bad_pattern = "^0-9.!$?/@#()*+-";
 
-  std::string removeSubstrs(std::string s, std::string &p) {
-    std::string::size_type n = p.length();
-    for (std::string::size_type i = s.find(p); i != std::string::npos;
-         i = s.find(p))
-      s.erase(i, n);
-    return s;
+  std::string removeSubstrs(std::string str, std::string &charsToRemove) {
+   for (size_t i = 0; i < charsToRemove.size(); ++i ) {
+      str.erase(std::remove(str.begin(), str.end(), charsToRemove[i]), str.end() );
+   }
+    return str;
   }
 
   std::vector<std::pair<std::string, std::string>>
   operator()(const std::string &str) override {
-    // string str = "red tuna, blue tuna, black tuna, one tuna";
-    // std::string pattern = "^0-9A-Za-zА-Яа-яёЁ.!?/@#()*+-";
-
     std::string formatted_string = removeSubstrs(str, bad_pattern);
-    // cout << str << endl;
     std::transform(formatted_string.begin(), formatted_string.end(),
                    formatted_string.begin(),
                    [](unsigned char c) { return std::tolower(c); });
