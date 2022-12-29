@@ -29,11 +29,7 @@ struct UserMapper : public IndustrialRise::IMapper {
 
   std::vector<std::pair<std::string, std::string>>
   operator()(const std::string &str) override {
-    // string str = "red tuna, blue tuna, black tuna, one tuna";
-    // std::string pattern = "^0-9A-Za-zА-Яа-яёЁ.!?/@#()*+-";
-
     std::string formatted_string = removeSubstrs(str, bad_pattern);
-    // cout << str << endl;
     std::transform(formatted_string.begin(), formatted_string.end(),
                    formatted_string.begin(),
                    [](unsigned char c) { return std::tolower(c); });
