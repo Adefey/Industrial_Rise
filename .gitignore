@@ -6,4 +6,3 @@ test
 !test/integration/*.py
 result_dir
 tmp_dir
-text.txt

@@ -8,7 +8,7 @@
 
 TEST(IndustrialMapReduceTest, TestMapReduce) {
   IndustrialRise::IndustrialMapReduce map_reducer(100000);
-  map_reducer.SetInputFiles({"./text.txt"});
+  map_reducer.SetInputFiles({"./example_data/text.txt"});
   map_reducer.SetMaxSimultaneouslyWorkers(10);
   map_reducer.SetNumReducers(10);
   map_reducer.SetTmpDir("./tmp_dir/");
@@ -25,7 +25,7 @@ TEST(IndustrialMapReduceTest, TestMapReduce) {
   }
 
   bool penis_found = false;
-  for (size_t i = 0; i < 8; ++i) {
+  for (size_t i = 0; i < 10; ++i) {
     std::ifstream file("./result_dir/reduced_" + std::to_string(i));
     std::string buf = "";
     while (std::getline(file, buf)) {
