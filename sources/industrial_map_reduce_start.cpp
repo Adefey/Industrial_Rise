@@ -5,7 +5,13 @@ namespace IndustrialRise {
 
 IndustrialMapReduce::IndustrialMapReduce()
     : buf_big_file_name("big_buf"), split_prefix("splitted_"),
-      reduced_prefix("reduced_"), split_size(33554432) {}
+      reduced_prefix("reduced_"), split_size(33554432) {
+} /* Default constructor with 32MB split size*/
+
+IndustrialMapReduce::IndustrialMapReduce(size_t split_size_bytes)
+    : buf_big_file_name("big_buf"), split_prefix("splitted_"),
+      reduced_prefix("reduced_"), split_size(split_size_bytes) {
+} /* Constructor with parameter wich specifies split size in bytes*/
 
 void IndustrialMapReduce::Start() {
   FilesToBuf();

@@ -69,6 +69,7 @@ private:
 
 public:
   IndustrialMapReduce();
+  explicit IndustrialMapReduce(size_t split_size_bytes);
 
   void SetInputFiles(const std::vector<std::string> &files);
 
