@@ -22,14 +22,13 @@ namespace IndustrialRise {
 
 struct IMapper {
   virtual std::vector<std::pair<std::string, std::string>>
-  operator()(const std::string &str) {
-    return {};
-  }
+  operator()(const std::string &str) = 0;
 };
 
 struct IReducer {
   virtual std::vector<std::pair<std::string, std::string>>
   operator()(std::vector<std::pair<std::string, std::vector<std::string>>>) {
+    std::cout << "Basic reducer example" << std::endl;
     return {};
   }
 };
@@ -58,8 +57,8 @@ private:
 
   std::mutex m;
 
-  IMapper mapper;
-  IReducer reducer;
+  IMapper *mapper;
+  IReducer *reducer;
 
   void FilesToBuf();
   void SplitFiles();
@@ -80,8 +79,8 @@ public:
 
   void SetTmpDir(const std::string &dir);
   void SetOutputDir(const std::string &dir);
-  void SetMapper(const IMapper &mapper_);
-  void SetReducer(const IReducer &reducer_);
+  void SetMapper(IMapper &mapper_);
+  void SetReducer(IReducer &reducer_);
   void Start();
 };
 

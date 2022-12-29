@@ -4,8 +4,8 @@
 
 namespace IndustrialRise {
 
-void IndustrialMapReduce::SetReducer(const IReducer &reducer_) {
-  reducer = reducer_;
+void IndustrialMapReduce::SetReducer(IReducer &reducer_) {
+  reducer = &reducer_;
 }
 
 void IndustrialMapReduce::Shuffle() {
@@ -13,6 +13,9 @@ void IndustrialMapReduce::Shuffle() {
   for (size_t i = 0; i < num_reducers; ++i) {
     std::unordered_set<std::string> k;
     keys.push_back(k);
+    std::vector<std::pair<std::string, std::vector<std::string>>> new_vec = {};
+    std::lock_guard<std::mutex> lg(m);
+    pred_reducer.push_back(new_vec);
   }
   size_t cur_new_key = 0;
   for (size_t mapper_i = 0; mapper_i < num_mappers; ++mapper_i) {
@@ -58,7 +61,7 @@ void IndustrialMapReduce::Shuffle() {
 }
 
 void IndustrialMapReduce::Reduce(const size_t reducer_num) {
-  auto result = reducer(pred_reducer[reducer_num]);
+  auto result = (*reducer)(pred_reducer[reducer_num]);
   std::ofstream out;
   out.open(output_dir + reduced_prefix + std::to_string(reducer_num));
   if (out.is_open()) {
