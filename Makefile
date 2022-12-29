@@ -6,7 +6,7 @@ SRC_DIR=./sources/
 TEST_DIR=./test/unit/
 CODE_FILES=$(INCLUDE_DIR)*.hpp $(SRC_DIR)*.cpp $(TEST_DIR)*.cpp
 
-all: format check build_app build_test run_test make_report
+all: format check build_app build_test run_test make_report integrational_test
 
 format:
 	clang-format -i $(CODE_FILES)
@@ -31,4 +31,7 @@ run_test:
 make_report:
 	lcov -t ./test/unit/build/ -o ./test/unit/coverage_report.info -c -d ./test/unit
 	genhtml -o ./test/unit/coverage_report ./test/unit/coverage_report.info
+
+integrational_test:
+	python3 ./test/integration/test.py
 
