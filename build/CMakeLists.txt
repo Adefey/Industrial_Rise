@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.18)
 
 project(industrial_rise)
 
+set (CMAKE_CXX_STANDARD 20)
+
 FILE(GLOB Sources ../sources/*.cpp)
 
 add_executable(industrial_map_reduce ${Sources})

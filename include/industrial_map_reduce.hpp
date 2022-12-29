@@ -4,12 +4,15 @@
 #define INDUSTRIAL_MAP_REDUCE_HPP_
 
 #include <condition_variable>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -17,7 +20,7 @@ namespace IndustrialRise {
 
 struct IMapper {
   virtual std::vector<std::pair<std::string, std::string>>
-  operator()(const std::string & str) {
+  operator()(const std::string &str) {
     return {};
   }
 };
@@ -58,10 +61,11 @@ private:
 
   void FilesToBuf();
   void SplitFiles();
+  void ClearFiles();
+
   void Shuffle();
   void Map(const size_t file_num);
   void Reduce(const size_t reducer_num);
-  void ClearFiles();
 
 public:
   IndustrialMapReduce();
