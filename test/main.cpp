@@ -4,7 +4,9 @@
 
 #include <industrial_map_reduce.hpp>
 
-TEST(IndustrialMapReduceTest, TestMapReduce) {}
+TEST(IndustrialMapReduceTest, TestMapReduce) {
+  IndustrialRise::IndustrialMapReduce map_reducer;
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

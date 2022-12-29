@@ -1,5 +1,6 @@
 build/*
 !build/CMakeLists.txt
-test/build/*
+test/*
 !test/build/CMakeLists.txt
+!test/main.cpp
 .vscode
