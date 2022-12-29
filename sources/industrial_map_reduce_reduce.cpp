@@ -14,11 +14,11 @@ void IndustrialMapReduce::Shuffle() {
     std::unordered_set<std::string> k;
     keys.push_back(k);
     std::vector<std::pair<std::string, std::vector<std::string>>> new_vec = {};
-    std::lock_guard<std::mutex> lg(m);
     pred_reducer.push_back(new_vec);
   }
   size_t cur_new_key = 0;
-  for (size_t mapper_i = 0; mapper_i < num_mappers; ++mapper_i) {
+  for (size_t mapper_i = 0; mapper_i < split_count; ++mapper_i) {
+    std::cout << "process mapper " << mapper_i << std::endl;
     for (size_t mapper_j = 0; mapper_j < post_mapper[mapper_i].size();
          ++mapper_j) {
       bool elem_in_reducers = false;
@@ -47,7 +47,7 @@ void IndustrialMapReduce::Shuffle() {
         } else {
           auto it = pred_reducer[cur_new_key].begin();
           while (it != pred_reducer[cur_new_key].end() &&
-                 post_mapper[mapper_i][mapper_j].first.compare((*it).first) <
+                 post_mapper[mapper_i][mapper_j].first.compare((*it).first) >
                      0) {
             it++;
           }
@@ -57,6 +57,7 @@ void IndustrialMapReduce::Shuffle() {
         cur_new_key = (cur_new_key + 1) % num_reducers;
       }
     }
+    std::cout << "Done" << std::endl;
   }
 }
 
@@ -69,6 +70,7 @@ void IndustrialMapReduce::Reduce(const size_t reducer_num) {
       out << elem.first << ": " << elem.second << std::endl;
     }
     out.close();
+    std::cout << "Reduced file #" << reducer_num << std::endl;
   } // else throw
 }
 

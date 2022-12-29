@@ -43,14 +43,13 @@ void IndustrialMapReduce::Start() {
   threads.clear();
 
   Shuffle();
-  /*
-    for (size_t i = 0; i < num_reducers; ++i) {
-      threads.emplace_back(std::thread(&IndustrialMapReduce::Reduce, this, i));
-    }
-    for (size_t i = 0; i < num_reducers; ++i) {
-      threads[i].join();
-    }
-    ClearFiles();
-    */
+
+  for (size_t i = 0; i < num_reducers; ++i) {
+    threads.emplace_back(std::thread(&IndustrialMapReduce::Reduce, this, i));
+  }
+  for (size_t i = 0; i < num_reducers; ++i) {
+    threads[i].join();
+  }
+  // ClearFiles();
 }
 } // namespace IndustrialRise
