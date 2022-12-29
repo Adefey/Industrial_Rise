@@ -21,9 +21,10 @@ struct UserMapper : public IndustrialRise::IMapper {
   std::string bad_pattern = "^0-9.!$?/@#()*+-";
 
   std::string removeSubstrs(std::string str, std::string &charsToRemove) {
-   for (size_t i = 0; i < charsToRemove.size(); ++i ) {
-      str.erase(std::remove(str.begin(), str.end(), charsToRemove[i]), str.end() );
-   }
+    for (size_t i = 0; i < charsToRemove.size(); ++i) {
+      str.erase(std::remove(str.begin(), str.end(), charsToRemove[i]),
+                str.end());
+    }
     return str;
   }
 
@@ -52,8 +53,8 @@ struct UserMapper : public IndustrialRise::IMapper {
     int z = 0;
     for (const auto &unique_word : unique_words) {
       result.push_back(std::make_pair(unique_word, "1"));
-      for (const auto &word : all_words) {
-        if (unique_word == word) {
+      for (const auto &word_ : all_words) {
+        if (unique_word == word_) {
           result[z].second = std::to_string(std::stoi(result[z].second) + 1);
         }
       }

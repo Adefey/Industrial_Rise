@@ -19,7 +19,8 @@
 
 struct UserReducer : public IndustrialRise::IReducer {
   std::vector<std::pair<std::string, std::string>> operator()(
-      std::vector<std::pair<std::string, std::vector<std::string>>> input) {
+      std::vector<std::pair<std::string, std::vector<std::string>>> input)
+      override {
     std::vector<std::pair<std::string, std::string>> result;
     for (size_t i = 0; i < input.size(); ++i) {
       std::pair<std::string, std::string> new_pair;
