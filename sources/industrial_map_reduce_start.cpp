@@ -31,6 +31,7 @@ void IndustrialMapReduce::SetOutputDir(const std::string &dir) {
 }
 
 void IndustrialMapReduce::Start() {
+  std::filesystem::create_directory(tmp_dir);
   FilesToBuf();
   SplitFiles();
   std::vector<std::thread> threads = {};
@@ -50,6 +51,7 @@ void IndustrialMapReduce::Start() {
   for (size_t i = 0; i < num_reducers; ++i) {
     threads[i].join();
   }
-  // ClearFiles();
+
+  ClearFiles();
 }
 } // namespace IndustrialRise

@@ -46,13 +46,13 @@ struct UserMapper : public IndustrialRise::IMapper {
       all_words.push_back(word);
     }
 
-    std::set<std::string> unique_words;
+    std::set<std::string> unique_words = {};
 
     for (const auto &it : all_words) {
       unique_words.insert(it);
     }
 
-    std::vector<std::pair<std::string, std::string>> result;
+    std::vector<std::pair<std::string, std::string>> result = {};
 
     int z = 0;
     for (const auto &unique_word : unique_words) {
