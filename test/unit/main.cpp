@@ -24,19 +24,19 @@ TEST(IndustrialMapReduceTest, TestMapReduce) {
         std::filesystem::exists("./result_dir/reduced_" + std::to_string(i)));
   }
 
-  bool penis_found = false;
+  bool special_line_found = false;
   for (size_t i = 0; i < 10; ++i) {
     std::ifstream file("./result_dir/reduced_" + std::to_string(i));
     std::string buf = "";
     while (std::getline(file, buf)) {
-      if (buf.find("penis") != std::string::npos) {
-        penis_found = true;
+      if (buf == "lottery: 7") {
+        special_line_found = true;
         break;
       }
     }
     file.close();
   }
-  EXPECT_TRUE(penis_found);
+  EXPECT_TRUE(special_line_found);
 }
 
 int main(int argc, char **argv) {

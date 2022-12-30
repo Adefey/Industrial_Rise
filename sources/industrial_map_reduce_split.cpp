@@ -35,9 +35,10 @@ void IndustrialMapReduce::SplitFiles() {
     std::cout << "Making file #" << split_count << std::endl;
     std::stringstream ss;
     std::string line;
-    while (std::getline(big_file, line) && (ss.str().size() < split_size)) {
+    while (std::getline(big_file, line) && (ss.str().size() <= split_size)) {
       ss << line;
     }
+    ss << line;
     std::ofstream splitted_file(tmp_dir + split_prefix +
                                 std::to_string(split_count++));
     splitted_file << ss.str();

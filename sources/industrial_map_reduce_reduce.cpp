@@ -18,7 +18,7 @@ void IndustrialMapReduce::Shuffle() {
   }
   size_t cur_new_key = 0;
   for (size_t mapper_i = 0; mapper_i < split_count; ++mapper_i) {
-    std::cout << "process mapper " << mapper_i << std::endl;
+    std::cout << "Process mapper " << mapper_i << std::endl;
     for (size_t mapper_j = 0; mapper_j < post_mapper[mapper_i].size();
          ++mapper_j) {
       bool elem_in_reducers = false;
@@ -40,8 +40,8 @@ void IndustrialMapReduce::Shuffle() {
         std::pair<std::string, std::vector<std::string>> new_pair;
         new_pair.first = post_mapper[mapper_i][mapper_j].first;
         std::vector<std::string> new_vector;
-        new_pair.second = new_vector;
         new_vector.push_back(post_mapper[mapper_i][mapper_j].second);
+        new_pair.second = new_vector;
         if (pred_reducer[cur_new_key].size() == 0) {
           pred_reducer[cur_new_key].push_back(new_pair);
         } else {

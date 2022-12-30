@@ -28,10 +28,12 @@ jobs:
         run: make build_test
       - name: run_test
         run: make run_test
+      - name: run_integration_test
+        run: make integrational_test
       - name: make_report
         run: make make_report
       - name: publish_coverage_report
         uses: actions/upload-artifact@v3
         with:
           name: coverage_report
-          path: ./test/coverage_report
+          path: ./test/unit/coverage_report

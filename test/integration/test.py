@@ -8,12 +8,16 @@ def run_program():
 
 
 class IntegrationalTests(unittest.TestCase):
+
     def test_texts(self):
         run_program()
         with open("./example_data/text.txt", "r", encoding="UTF-8") as f:
             lines = f.readlines()
         lines = map(lambda x: x.split(), lines)
         text = reduce(lambda a, b: a + b, lines)
+        word_count = {}
+        for word in text:
+            word_count[word] = word_count.get(word, 0) + 1
         
         for reducer in range(10):
             with open(f"./result_dir/reduced_{reducer}", "r", encoding="UTF-8") as f:
@@ -22,7 +26,7 @@ class IntegrationalTests(unittest.TestCase):
                 word, count = line.split(": ")
                 if word == "":
                     continue
-                self.assertIn(word, text)
+                self.assertEqual(word_count[word], int(count.strip()))
                         
 
 if __name__ == '__main__':
