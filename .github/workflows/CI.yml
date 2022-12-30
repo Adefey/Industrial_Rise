@@ -21,19 +21,13 @@ jobs:
           sudo pip install cpplint
           sudo apt install python
       - name: check
-        run: make check
-      - name: build_app
-        run: make build_app
-      - name: build_test
-        run: make build_test
+        run: bash preprocess_code.sh
+      - name: build_all
+        run: bash build.sh
       - name: run_test
-        run: make run_test
-      - name: run_integration_test
-        run: make integrational_test
-      - name: make_report
-        run: make make_report
+        run: bash run_test_suite.sh
       - name: publish_coverage_report
         uses: actions/upload-artifact@v3
         with:
           name: coverage_report
-          path: ./test/unit/coverage_report
+          path: ./build/test/unit/coverage_report
