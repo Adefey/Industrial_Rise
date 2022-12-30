@@ -1,0 +1,8 @@
+build
+!build/CMakeLists.txt
+test
+!test/unit/*.cpp
+!test/unit/build/CMakeLists.txt
+!test/integration/*.py
+result_dir
+tmp_dir
