@@ -41,6 +41,7 @@ void IndustrialMapReduce::Reduce(const size_t reducer_num) {
       new_pair.first = tmp_pair.first.first;
       new_pair.second = new_vec;
       pred_reducer.push_back(new_pair);
+      last_key = tmp_pair.first.first;
     }
   }
 
