@@ -36,6 +36,12 @@ private:
   const std::string split_prefix;
   const std::string reduced_prefix;
   const size_t split_size;
+  const std::vector<char> alphabet = {
+  'a', 'b', 'c', 'd', 'e',
+  'f', 'g', 'h', 'i', 'j', 'k',
+  'l', 'm', 'n', 'o', 'p',
+  'q', 'r', 's', 't', 'u',
+  'v', 'w', 'x', 'y', 'z'};
   size_t split_count;
 
   size_t num_mappers;

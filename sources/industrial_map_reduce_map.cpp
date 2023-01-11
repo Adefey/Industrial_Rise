@@ -1,6 +1,7 @@
 // Copyright 2022 howardano
 
 #include <industrial_map_reduce.hpp>
+#include <cmath>
 
 namespace IndustrialRise {
 
@@ -33,24 +34,40 @@ void IndustrialMapReduce::Map(const size_t file_num) {
             << post_mapper.size() << std::endl;*/
 
   std::sort(post_mapper_element.begin(), post_mapper_element.end(), [](auto &left, auto &right) {
-    return left.compare(right.compare);
+    return left.first.compare(right.first) < 0;
   });
 
-  int z = 0;
-  int k = 0;
+  float alphSize = alphabet.size();
+  float nr = num_reducers;
+  int adder = std::ceil(alphSize / nr);
+  int l = 0;
+  std::vector<std::vector<char>> Chars;
 
-  for (size_t i = 0; i < post_mapper_element.size(); ++i) {
-    std::vector<std::pair<std::string, std::string>> buf;
-    for (int j = k; j < k + num_reducers; ++j) {
-      buf.push_back(post_mapper_element[j]);
+  for (int i = 0; i < alphabet.size(); ++i) {
+    std::vector<char> bufCh;
+    for (int j = 0; j < adder; ++j) {
+      if (i >= alphabet.size()) {
+        break;
+      }
+      bufCh.push_back(alphabet[i]);
+      i++;
     }
-    k += num_reducers;
-    post_mapper[file_num][z] = buf;
-    z++;
-    if (z == num_reducers) {
-      z = 0;
-    }
+    Chars.push_back(bufCh);
   }
+
+  int k = 0;
+  int reducer = 0;
+
+  for (int i = 0; i < Chars.size(); ++i) {
+    std::vector<std::pair<std::string, std::string>> buf;
+    while(std::find(Chars[i].begin(), Chars[i].end(), post_mapper_element[k].first[0]) != Chars[i].end()) {
+      buf.push_back(post_mapper_element[k]);
+      k++;
+    }
+    post_mapper[file_num][reducer].insert(post_mapper[file_num][reducer].end(), buf.begin(), buf.end());
+    reducer++;
+  }
+
 }
 
 } // namespace IndustrialRise
