@@ -47,10 +47,7 @@ private:
 
   std::string output_dir;
 
-  std::vector<std::vector<std::pair<std::string, std::string>>> post_mapper;
-
-  std::vector<std::vector<std::pair<std::string, std::vector<std::string>>>>
-      pred_reducer;
+  std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> post_mapper;
 
   std::mutex m;
 
@@ -61,9 +58,16 @@ private:
   void SplitFiles();
   void ClearFiles();
 
-  void Shuffle();
   void Map(const size_t file_num);
   void Reduce(const size_t reducer_num);
+
+  class PairCompare {
+  public:
+    int operator() (const std::pair<std::pair<std::string, std::string>, int> &p1, const std::pair<std::pair<std::string, std::string>, int> &p2)
+    {
+      return p1.first.first.compare(p2.first.first) > 0;
+    }
+  };
 
 public:
   IndustrialMapReduce();
