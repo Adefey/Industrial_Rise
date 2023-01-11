@@ -35,6 +35,7 @@ void IndustrialMapReduce::Start() {
   FilesToBuf();
   SplitFiles();
   std::vector<std::thread> threads = {};
+  InitializePostMapper(num_mappers, num_reducers);
   for (size_t i = 0; i < split_count; ++i) {
     threads.emplace_back(std::thread(&IndustrialMapReduce::Map, this, i));
   }
