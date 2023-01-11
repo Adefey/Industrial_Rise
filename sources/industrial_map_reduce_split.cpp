@@ -41,7 +41,9 @@ void IndustrialMapReduce::SplitFiles() {
     ss << line;
     std::ofstream splitted_file(tmp_dir + split_prefix +
                                 std::to_string(split_count++));
-    splitted_file << ss.str();
+    std::string data = ss.str();
+    data.erase(0, 1);
+    splitted_file << data;
     splitted_file.close();
     std::cout << "Split file #" << split_count << " saved" << std::endl;
   }
