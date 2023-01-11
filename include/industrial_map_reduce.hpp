@@ -32,6 +32,14 @@ struct IReducer {
 
 class IndustrialMapReduce {
 private:
+
+  const std::vector<char> alphabet = {
+    'a', 'b', 'c', 'd', 'e',
+    'f', 'g', 'h', 'i', 'j', 'k',
+    'l', 'm', 'n', 'o', 'p',
+    'q', 'r', 's', 't', 'u',
+    'v', 'w', 'x', 'y', 'z'};
+
   const std::string buf_big_file_name;
   const std::string split_prefix;
   const std::string reduced_prefix;
@@ -57,6 +65,7 @@ private:
   void FilesToBuf();
   void SplitFiles();
   void ClearFiles();
+  void InitializePostMapper(size_t num_mappers, size_t num_reducers);
 
   void Map(const size_t file_num);
   void Reduce(const size_t reducer_num);
