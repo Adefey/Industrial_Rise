@@ -32,13 +32,9 @@ struct IReducer {
 
 class IndustrialMapReduce {
 private:
-
   const std::vector<char> alphabet = {
-    'a', 'b', 'c', 'd', 'e',
-    'f', 'g', 'h', 'i', 'j', 'k',
-    'l', 'm', 'n', 'o', 'p',
-    'q', 'r', 's', 't', 'u',
-    'v', 'w', 'x', 'y', 'z'};
+      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+      'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
   const std::string buf_big_file_name;
   const std::string split_prefix;
@@ -55,7 +51,8 @@ private:
 
   std::string output_dir;
 
-  std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> post_mapper;
+  std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>>
+      post_mapper;
 
   std::mutex m;
 
@@ -72,8 +69,9 @@ private:
 
   class PairCompare {
   public:
-    int operator() (const std::pair<std::pair<std::string, std::string>, int> &p1, const std::pair<std::pair<std::string, std::string>, int> &p2)
-    {
+    int
+    operator()(const std::pair<std::pair<std::string, std::string>, int> &p1,
+               const std::pair<std::pair<std::string, std::string>, int> &p2) {
       return p1.first.first.compare(p2.first.first) > 0;
     }
   };

@@ -54,6 +54,6 @@ void IndustrialMapReduce::Start() {
     threads[i].join();
   }
 
-  //ClearFiles();
+  ClearFiles();
 }
 } // namespace IndustrialRise

@@ -11,13 +11,18 @@ void IndustrialMapReduce::SetReducer(IReducer &reducer_) {
 
 void IndustrialMapReduce::Reduce(const size_t reducer_num) {
   std::cout << "Reducing..." << std::endl;
-  std::priority_queue<std::pair<std::pair<std::string, std::string>, int>, std::vector<std::pair<std::pair<std::string, std::string>, int>>, PairCompare> min_heap;
+  std::priority_queue<
+      std::pair<std::pair<std::string, std::string>, int>,
+      std::vector<std::pair<std::pair<std::string, std::string>, int>>,
+      PairCompare>
+      min_heap;
   std::vector<std::pair<std::string, std::vector<std::string>>> pred_reducer;
   std::string last_key = "--- not a valid key ---";
   std::vector<size_t> pointers(split_count, 0);
   for (size_t mapper = 0; mapper < split_count; ++mapper) {
     if (post_mapper[mapper][reducer_num].size() == 0) {
-      std::cout << "empty!" << "\n";
+      std::cout << "empty!"
+                << "\n";
       std::ofstream out;
       out.open(output_dir + reduced_prefix + std::to_string(reducer_num));
       out.close();
@@ -34,14 +39,17 @@ void IndustrialMapReduce::Reduce(const size_t reducer_num) {
     min_heap.pop();
 
     pointers[tmp_pair.second] += 1;
-    if (pointers[tmp_pair.second] < post_mapper[tmp_pair.second][reducer_num].size()) {
+    if (pointers[tmp_pair.second] <
+        post_mapper[tmp_pair.second][reducer_num].size()) {
       std::pair<std::pair<std::string, std::string>, int> new_pair;
-      new_pair.first = post_mapper[tmp_pair.second][reducer_num][pointers[tmp_pair.second]];
+      new_pair.first =
+          post_mapper[tmp_pair.second][reducer_num][pointers[tmp_pair.second]];
       new_pair.second = tmp_pair.second;
       min_heap.push(new_pair);
     }
     if (tmp_pair.first.first == last_key) {
-      pred_reducer[pred_reducer.size() - 1].second.push_back(tmp_pair.first.second);
+      pred_reducer[pred_reducer.size() - 1].second.push_back(
+          tmp_pair.first.second);
     } else {
       std::vector<std::string> new_vec;
       new_vec.push_back(tmp_pair.first.second);
