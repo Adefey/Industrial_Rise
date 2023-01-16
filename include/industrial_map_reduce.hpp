@@ -47,7 +47,8 @@ private:
 
   std::string output_dir;
 
-  std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> post_mapper;
+  std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>>
+      post_mapper;
 
   std::mutex m;
 
@@ -63,8 +64,9 @@ private:
 
   class PairCompare {
   public:
-    int operator() (const std::pair<std::pair<std::string, std::string>, int> &p1, const std::pair<std::pair<std::string, std::string>, int> &p2)
-    {
+    int
+    operator()(const std::pair<std::pair<std::string, std::string>, int> &p1,
+               const std::pair<std::pair<std::string, std::string>, int> &p2) {
       return p1.first.first.compare(p2.first.first) > 0;
     }
   };
