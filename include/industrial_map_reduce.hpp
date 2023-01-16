@@ -62,7 +62,7 @@ private:
   void FilesToBuf();
   void SplitFiles();
   void ClearFiles();
-  void InitializePostMapper(size_t num_mappers, size_t num_reducers);
+  void InitializePostMapper();
 
   void Map(const size_t file_num);
   void Reduce(const size_t reducer_num);
