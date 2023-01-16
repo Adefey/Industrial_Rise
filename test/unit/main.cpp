@@ -7,7 +7,7 @@
 #include <industrial_map_reduce_user_reducer.hpp>
 
 TEST(IndustrialMapReduceTest, TestMapReduce) {
-  IndustrialRise::IndustrialMapReduce map_reducer(100000);
+  IndustrialRise::IndustrialMapReduce map_reducer(56123);
   map_reducer.SetInputFiles({"./example_data/text.txt"});
   map_reducer.SetMaxSimultaneouslyWorkers(10);
   map_reducer.SetNumReducers(10);

@@ -1,7 +1,7 @@
 // Copyright 2022 howardano
 
-#include <industrial_map_reduce.hpp>
 #include <cmath>
+#include <industrial_map_reduce.hpp>
 
 namespace IndustrialRise {
 
@@ -14,7 +14,12 @@ void IndustrialMapReduce::InitializePostMapper() {
   }
 }
 
-void IndustrialMapReduce::Map(const size_t file_num) {
+void IndustrialMapReduce::Map(const size_t file_num, size_t mapper_num) {
+  // {
+  //   std::lock_guard<std::mutex> lg(m);
+  //   std::cout<<"Thread on slot "<<mapper_num<<" started"<<std::endl;
+  //   mapper_status[mapper_num] = WORKING;
+  // }
   std::ifstream in(tmp_dir + split_prefix + std::to_string(file_num));
   std::cout << "Read file" << std::endl;
   std::string res = "";
@@ -28,12 +33,13 @@ void IndustrialMapReduce::Map(const size_t file_num) {
 
   std::vector<std::pair<std::string, std::string>> post_mapper_element =
       (*mapper)(res);
-  //std::lock_guard<std::mutex> lg(m);
-  // post_mapper.push_back(post_mapper_element);
+  // std::lock_guard<std::mutex> lg(m);
+  //  post_mapper.push_back(post_mapper_element);
 
-  std::sort(post_mapper_element.begin(), post_mapper_element.end(), [](auto &left, auto &right) {
-    return left.first.compare(right.first) < 0;
-  });
+  std::sort(post_mapper_element.begin(), post_mapper_element.end(),
+            [](auto &left, auto &right) {
+              return left.first.compare(right.first) < 0;
+            });
 
   std::vector<std::vector<char>> Chars;
   std::cout << "reducers: " << num_reducers << "\n";
@@ -42,7 +48,7 @@ void IndustrialMapReduce::Map(const size_t file_num) {
   for (int i = 0; i < alphabet.size() % num_reducers; ++i) {
     numOfChars[i] += 1;
   }
-  
+
   int l = 0;
 
   for (int i = 0; i < numOfChars.size(); ++i) {
@@ -56,22 +62,28 @@ void IndustrialMapReduce::Map(const size_t file_num) {
 
   int k = 0;
   int reducer = 0;
- 
+
   for (int i = 0; i < Chars.size(); ++i) {
-    while (k < post_mapper_element.size() && std::count(alphabet.begin(), alphabet.end(), post_mapper_element[k].first[0]) == 0) {
+    while (k < post_mapper_element.size() &&
+           std::count(alphabet.begin(), alphabet.end(),
+                      post_mapper_element[k].first[0]) == 0) {
       k++;
     }
     std::vector<std::pair<std::string, std::string>> buf;
-    
-    while(k < post_mapper_element.size() && std::count(Chars[i].begin(), Chars[i].end(), post_mapper_element[k].first[0]) != 0) {
+
+    while (k < post_mapper_element.size() &&
+           std::count(Chars[i].begin(), Chars[i].end(),
+                      post_mapper_element[k].first[0]) != 0) {
       buf.push_back(post_mapper_element[k]);
       k++;
     }
-    post_mapper[file_num][reducer].insert(post_mapper[file_num][reducer].end(), buf.begin(), buf.end());
+    post_mapper[file_num][reducer].insert(post_mapper[file_num][reducer].end(),
+                                          buf.begin(), buf.end());
     reducer++;
   }
   std::cout << "Done" << std::endl;
-}
 
+  mapper_status[mapper_num] = EXITED;
+}
 
 } // namespace IndustrialRise
