@@ -69,7 +69,7 @@ void IndustrialMapReduce::Reduce(const size_t reducer_num) {
     }
     out.close();
     std::cout << "Reduced file #" << reducer_num << std::endl;
-  } // else throw
+  }
 }
 
 } // namespace IndustrialRise
