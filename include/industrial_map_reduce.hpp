@@ -4,6 +4,7 @@
 #define INDUSTRIAL_MAP_REDUCE_HPP_
 
 #include <algorithm>
+#include <chrono>
 #include <condition_variable>
 #include <filesystem>
 #include <fstream>
@@ -30,6 +31,12 @@ struct IReducer {
   operator()(std::vector<std::pair<std::string, std::vector<std::string>>>) = 0;
 };
 
+enum STATUSES {
+  NOT_WORKING = 0,
+  WORKING = 1,
+  EXITED = 2,
+};
+
 class IndustrialMapReduce {
 private:
   const std::vector<char> alphabet = {
@@ -46,6 +53,7 @@ private:
   size_t num_reducers;
 
   std::vector<std::string> input_files;
+  std::vector<int> mapper_status;
 
   std::string tmp_dir;
 
@@ -59,12 +67,13 @@ private:
   IMapper *mapper;
   IReducer *reducer;
 
+  size_t find_ready_slot();
   void FilesToBuf();
   void SplitFiles();
   void ClearFiles();
   void InitializePostMapper();
 
-  void Map(const size_t file_num);
+  void Map(const size_t file_num, size_t mapper_num);
   void Reduce(const size_t reducer_num);
 
   class PairCompare {

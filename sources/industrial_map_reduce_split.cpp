@@ -32,6 +32,7 @@ void IndustrialMapReduce::SplitFiles() {
   std::cout << "Start file split" << std::endl;
   for (size_t cur_byte_count = 0; cur_byte_count < file_length;
        cur_byte_count += split_size) {
+    std::cout << "split size #" << split_size << std::endl;
     std::cout << "Making file #" << split_count << std::endl;
     std::stringstream ss;
     std::string line;
