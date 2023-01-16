@@ -30,20 +30,45 @@ void IndustrialMapReduce::SetOutputDir(const std::string &dir) {
   output_dir = dir;
 }
 
+size_t IndustrialMapReduce::find_ready_slot() {
+  while (true) {
+    for (size_t i = 0; i < mapper_status.size(); ++i) {
+      if (mapper_status[i] == NOT_WORKING || mapper_status[i] == EXITED) {
+        return i;
+      }
+    }
+  }
+}
+
 void IndustrialMapReduce::Start() {
   std::filesystem::create_directory(tmp_dir);
   FilesToBuf();
   SplitFiles();
-  std::vector<std::thread> threads = {};
-  for (size_t i = 0; i < split_count; ++i) {
-    threads.emplace_back(std::thread(&IndustrialMapReduce::Map, this, i));
-  }
-  for (size_t i = 0; i < split_count; ++i) {
-    threads[i].join();
-  }
-  threads.clear();
+  std::vector<std::thread> threads(num_mappers);
 
-  Shuffle();
+  InitializePostMapper();
+
+  mapper_status = std::vector<int>(num_mappers, NOT_WORKING);
+
+  for (size_t i = 0; i < split_count; ++i) {
+    size_t ind_emplace = find_ready_slot();
+    std::cout << "slot: " << ind_emplace << std::endl;
+    if (mapper_status[ind_emplace] == EXITED) {
+      threads[ind_emplace].join();
+    }
+
+    mapper_status[ind_emplace] = WORKING;
+    threads[ind_emplace] =
+        std::thread(&IndustrialMapReduce::Map, this, i, ind_emplace);
+  }
+
+  for (size_t i = 0; i < num_mappers; ++i) {
+    if (mapper_status[i] == EXITED || mapper_status[i] == WORKING) {
+      threads[i].join();
+    }
+  }
+
+  threads.clear();
 
   for (size_t i = 0; i < num_reducers; ++i) {
     threads.emplace_back(std::thread(&IndustrialMapReduce::Reduce, this, i));
